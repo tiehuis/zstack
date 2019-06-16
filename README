@@ -1,0 +1,9 @@
+Line-race mode tetris variant.
+
+    zig build
+    ./zstack
+
+See src/config.zig for available options.
+
+There are two graphics backends available, SDL and GL. Modify src/zstack.zig
+and build.zig to switch between the two.
