@@ -1,29 +1,28 @@
 const Builder = @import("std").build.Builder;
 
-const use_opengl = true;
-
 pub fn build(b: *Builder) void {
     const mode = b.standardReleaseOptions();
     const exe = b.addExecutable("zstack", "src/main.zig");
     exe.setBuildMode(mode);
 
+    const use_sdl2 = b.option(bool, "use-sdl2", "Use SDL2 instead of OpenGL (default) for graphics") orelse false;
+    exe.addBuildOption(bool, "use_sdl2", use_sdl2);
+
     b.detectNativeSystemPaths();
     exe.linkSystemLibrary("c");
 
-    const c_flags = [_][]const u8{ "-Wall", "-O2", "-g" };
-
-    if (!use_opengl) {
+    if (use_sdl2) {
         exe.linkSystemLibrary("SDL2");
         exe.linkSystemLibrary("SDL2_ttf");
 
         exe.addIncludeDir("deps/SDL_FontCache");
-        exe.addCSourceFile("deps/SDL_FontCache/SDL_FontCache.c", c_flags);
+        exe.addCSourceFile("deps/SDL_FontCache/SDL_FontCache.c", [_][]const u8{});
     } else {
         exe.linkSystemLibrary("glfw");
         exe.linkSystemLibrary("epoxy");
 
         exe.addIncludeDir("deps/fontstash/src");
-        exe.addCSourceFile("deps/fontstash/src/fontstash.c", c_flags ++ [_][]const u8{"-Wno-unused-function"});
+        exe.addCSourceFile("deps/fontstash/src/fontstash.c", [_][]const u8{"-Wno-unused-function"});
     }
 
     exe.setOutputDir(".");

@@ -328,7 +328,7 @@ pub const Window = struct {
             if (e.options.lock_delay_ms != 0) {
                 const lock_ratio = @intToFloat(f32, p.lock_timer) / @intToFloat(f32, zs.ticks(e.options.lock_delay_ms));
                 if (lock_ratio != 0) {
-                    inline for (([][]const u8{ "r", "g", "b" })[0..]) |entry| {
+                    inline for (([_][]const u8{ "r", "g", "b" })[0..]) |entry| {
                         if (@field(nc, entry) < @field(stack_color, entry)) {
                             @field(nc, entry) += @floatToInt(u8, @intToFloat(f32, @field(stack_color, entry) - @field(nc, entry)) * lock_ratio);
                         } else {
@@ -340,7 +340,7 @@ pub const Window = struct {
             if (e.state == .Are and e.options.are_delay_ms != 0) {
                 const lock_ratio = @intToFloat(f32, e.are_counter) / @intToFloat(f32, zs.ticks(e.options.are_delay_ms));
                 if (lock_ratio != 0) {
-                    inline for (([][]const u8{ "r", "g", "b" })[0..]) |entry| {
+                    inline for (([_][]const u8{ "r", "g", "b" })[0..]) |entry| {
                         if (@field(nc, entry) < @field(stack_color, entry)) {
                             @field(nc, entry) += @floatToInt(u8, @intToFloat(f32, @field(stack_color, entry) - @field(nc, entry)) * lock_ratio);
                         } else {

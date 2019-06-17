@@ -1,3 +1,5 @@
+const build_options = @import("build_options");
+
 pub const piece = @import("piece.zig");
 pub const randomizer = @import("randomizer.zig");
 pub const rotation = @import("rotation.zig");
@@ -7,7 +9,10 @@ pub const input = @import("input.zig");
 pub const utility = @import("utility.zig");
 
 // Build option to switch this
-pub const window = @import("window_gl.zig");
+pub const window = if (build_options.use_sdl2)
+    @import("window_sdl.zig")
+else
+    @import("window_gl.zig");
 
 pub const Engine = engine.Engine;
 pub const RotationSystem = rotation.RotationSystem;

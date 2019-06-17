@@ -5,5 +5,7 @@ Line-race mode tetris variant.
 
 See src/config.zig for available options.
 
-There are two graphics backends available, SDL and GL. Modify src/zstack.zig
-and build.zig to switch between the two.
+There are two graphics backends available, SDL and OpenGL. OpenGL is used
+by default, to use SDL, build with
+
+    zig build -Duse-sdl2=true
